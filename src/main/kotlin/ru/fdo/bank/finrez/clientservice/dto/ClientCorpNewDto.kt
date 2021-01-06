@@ -5,8 +5,7 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
 
-data class ClientCorpNewDto(@field:NotNull val typeOfClient: TypeOfClient,
-                            @field:NotBlank val name: String,
+data class ClientCorpNewDto(@field:NotBlank val name: String,
                             @field:NotBlank val orgForm: String,
                             @field:NotBlank val abbreviatedName: String,
                             @field:Pattern(regexp = "[0-9]{10}", message = "Incorrect value") val inn: String,
