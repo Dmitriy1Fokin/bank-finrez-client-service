@@ -4,5 +4,5 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier
 import ru.fdo.bank.finrez.clientservice.dto.ClientCorpNewDto
 import java.util.UUID
 
-data class CreateClientCorpCommand(@TargetAggregateIdentifier val createClientCorpCommandId: UUID,
+data class CreateClientCorpCommand(@TargetAggregateIdentifier val clientId: String,
                                    val clientCorpNewDto: ClientCorpNewDto)
