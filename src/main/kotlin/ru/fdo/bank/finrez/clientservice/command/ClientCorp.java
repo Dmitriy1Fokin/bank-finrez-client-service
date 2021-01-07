@@ -2,6 +2,7 @@ package ru.fdo.bank.finrez.clientservice.command;
 
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventhandling.EventHandler;
+import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
@@ -59,7 +60,7 @@ public class ClientCorp {
         AggregateLifecycle.apply(new ClientCorpUpdatedEvent(cmd.getClientCorpUpdateDto()));
     }
 
-    @EventHandler
+    @EventSourcingHandler
     public void on(ClientCorpCreatedEvent event){
         this.clientId = event.getClientId();
         this.name = event.getClientCorpNewDto().getName();
@@ -75,7 +76,7 @@ public class ClientCorp {
         this.email = event.getClientCorpNewDto().getEmail();
     }
 
-    @EventHandler
+    @EventSourcingHandler
     public void on(ClientCorpUpdatedEvent event){
         this.clientId = event.getClientCorpUpdateDto().getClientId();
         this.name = event.getClientCorpUpdateDto().getName();
