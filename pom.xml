@@ -22,6 +22,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>ru.fdo.bank.finrez</groupId>
+            <artifactId>client-service-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-spring-boot-starter</artifactId>
             <version>${axon.version}</version>
