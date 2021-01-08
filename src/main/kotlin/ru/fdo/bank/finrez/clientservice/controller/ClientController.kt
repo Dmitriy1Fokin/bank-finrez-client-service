@@ -15,7 +15,7 @@ import javax.validation.Valid
 
 
 @RestController
-@RequestMapping("/client")
+@RequestMapping("/client/cmd")
 class ClientController(private val clientService: ClientService) {
 
     @PostMapping("/create")
