@@ -6,9 +6,13 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import ru.fdo.bank.finrez.clientservice.dto.ClientCorpNewDto
 import ru.fdo.bank.finrez.clientservice.dto.ClientCorpUpdateDto
+import ru.fdo.bank.finrez.clientservice.dto.ClientIndividualNewDto
+import ru.fdo.bank.finrez.clientservice.dto.ClientIndividualUpdateDto
 import ru.fdo.bank.finrez.clientservice.service.ClientService
 import ru.fdo.bank.finrez.clientservicecommon.coreapi.command.CreateClientCorpCommand
+import ru.fdo.bank.finrez.clientservicecommon.coreapi.command.CreateClientIndividualCommand
 import ru.fdo.bank.finrez.clientservicecommon.coreapi.command.UpdateClientCorpCommand
+import ru.fdo.bank.finrez.clientservicecommon.coreapi.command.UpdateClientIndividualCommand
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
 
@@ -47,6 +51,28 @@ class ClientServiceImpl(private val commandGateway: CommandGateway) : ClientServ
                 clientCorpUpdateDto.addressU,
                 clientCorpUpdateDto.addressF,
                 clientCorpUpdateDto.email))
+    }
+
+    override fun createClientIndividual(clientIndividualNewDto: ClientIndividualNewDto): CompletableFuture<UUID> {
+        logger.debug("triggered createClientIndividual: $clientIndividualNewDto")
+        return commandGateway.send(CreateClientIndividualCommand(UUID.randomUUID().toString(),
+                clientIndividualNewDto.lastName,
+                clientIndividualNewDto.firstName,
+                clientIndividualNewDto.middleName,
+                clientIndividualNewDto.citizenship,
+                clientIndividualNewDto.birthday,
+                clientIndividualNewDto.passport))
+    }
+
+    override fun updateClientIndividual(clientIndividualUpdateDto: ClientIndividualUpdateDto): CompletableFuture<UUID> {
+        logger.debug("triggered updateClientIndividual: $clientIndividualUpdateDto")
+        return commandGateway.send(UpdateClientIndividualCommand(clientIndividualUpdateDto.clientId,
+                clientIndividualUpdateDto.lastName,
+                clientIndividualUpdateDto.firstName,
+                clientIndividualUpdateDto.middleName,
+                clientIndividualUpdateDto.citizenship,
+                clientIndividualUpdateDto.birthday,
+                clientIndividualUpdateDto.passport))
     }
 
 }
