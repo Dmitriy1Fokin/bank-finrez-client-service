@@ -1,5 +1,6 @@
 package ru.fdo.bank.finrez.clientservice.command;
 
+import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -15,6 +16,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@Slf4j
 @Aggregate
 @Entity
 @Table(name = "client_corp")
@@ -51,6 +53,7 @@ public class ClientCorp {
 
     @CommandHandler
     public ClientCorp(CreateClientCorpCommand cmd){
+        log.debug("triggered CreateClientCorpCommand: {}", cmd);
         AggregateLifecycle.apply(new ClientCorpCreatedEvent(cmd.getClientId(), 
                 cmd.getName(),
                 cmd.getOrgForm(),
@@ -67,6 +70,7 @@ public class ClientCorp {
 
     @CommandHandler
     public void handle(UpdateClientCorpCommand cmd){
+        log.debug("triggered UpdateClientCorpCommand: {}", cmd);
         AggregateLifecycle.apply(new ClientCorpUpdatedEvent(cmd.getClientId(),
                 cmd.getName(),
                 cmd.getOrgForm(),
@@ -83,6 +87,7 @@ public class ClientCorp {
 
     @EventSourcingHandler
     public void on(ClientCorpCreatedEvent event){
+        log.debug("triggered ClientCorpCreatedEvent: {}", event);
         this.clientId = event.getClientId();
         this.name = event.getName();
         this.orgForm = event.getOrgForm();
@@ -99,6 +104,7 @@ public class ClientCorp {
 
     @EventSourcingHandler
     public void on(ClientCorpUpdatedEvent event){
+        log.debug("triggered ClientCorpUpdatedEvent: {}", event);
         this.clientId = event.getClientId();
         this.name = event.getName();
         this.orgForm = event.getOrgForm();

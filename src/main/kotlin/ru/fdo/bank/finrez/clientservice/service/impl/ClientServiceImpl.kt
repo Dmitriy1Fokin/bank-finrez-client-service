@@ -1,6 +1,8 @@
 package ru.fdo.bank.finrez.clientservice.service.impl
 
 import org.axonframework.commandhandling.gateway.CommandGateway
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import ru.fdo.bank.finrez.clientservice.dto.ClientCorpNewDto
 import ru.fdo.bank.finrez.clientservice.dto.ClientCorpUpdateDto
@@ -13,8 +15,11 @@ import java.util.concurrent.CompletableFuture
 @Service
 class ClientServiceImpl(private val commandGateway: CommandGateway) : ClientService {
 
-    override fun createClientCorp(clientCorpNewDto: ClientCorpNewDto): CompletableFuture<UUID> =
-        commandGateway.send(CreateClientCorpCommand(UUID.randomUUID().toString(),
+    private val logger: Logger = LoggerFactory.getLogger(ClientServiceImpl::class.java)
+
+    override fun createClientCorp(clientCorpNewDto: ClientCorpNewDto): CompletableFuture<UUID> {
+        logger.debug("triggered createClientCorp: $clientCorpNewDto")
+        return commandGateway.send(CreateClientCorpCommand(UUID.randomUUID().toString(),
                 clientCorpNewDto.name,
                 clientCorpNewDto.orgForm,
                 clientCorpNewDto.abbreviatedName,
@@ -26,9 +31,11 @@ class ClientServiceImpl(private val commandGateway: CommandGateway) : ClientServ
                 clientCorpNewDto.addressU,
                 clientCorpNewDto.addressF,
                 clientCorpNewDto.email))
+    }
 
-    override fun updateClientCorp(clientCorpUpdateDto: ClientCorpUpdateDto): CompletableFuture<UUID> =
-        commandGateway.send(UpdateClientCorpCommand(clientCorpUpdateDto.clientId,
+    override fun updateClientCorp(clientCorpUpdateDto: ClientCorpUpdateDto): CompletableFuture<UUID> {
+        logger.debug("triggered updateClientCorp: $clientCorpUpdateDto")
+        return commandGateway.send(UpdateClientCorpCommand(clientCorpUpdateDto.clientId,
                 clientCorpUpdateDto.name,
                 clientCorpUpdateDto.orgForm,
                 clientCorpUpdateDto.abbreviatedName,
@@ -40,5 +47,6 @@ class ClientServiceImpl(private val commandGateway: CommandGateway) : ClientServ
                 clientCorpUpdateDto.addressU,
                 clientCorpUpdateDto.addressF,
                 clientCorpUpdateDto.email))
+    }
 
 }
